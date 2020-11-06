@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5367b128a21b90e438a533aa1ea9bac6, type: 3}
+  m_Name: Desmatamento
+  m_EditorClassIdentifier: 
+  title: "O dinheiro nasce em \xE1rvore"
+  description: "Como \xE9 bom ver um aventureiro por aqui!\nEspero que voc\xEA me
+    ajude com uma miss\xE3o importante...\n\nAlguns lenhadores est\xE3o cortando
+    \xE1rvores e precisamos salvar o Xaxim da EXTIN\xC7\xC3O, preciso que encontre
+    o Xaxim dourado.\n\nConto com voc\xEA!"
+  image: {fileID: 21300000, guid: 21d299468726e554c85642dff0ef3df9, type: 3}
+  itemCollectable: {fileID: 21300000, guid: 21d299468726e554c85642dff0ef3df9, type: 3}
+  rewardDescription: "Salvando da Extin\xE7\xE3o"
+  rewardImage: {fileID: 21300000, guid: 21d299468726e554c85642dff0ef3df9, type: 3}
+  missionTip: "Atraia a aten\xE7\xE3o dos lenhadores para conseguir chegar at\xE9
+    a planta. Cuidado para n\xE3o ser capturado!"
+  NPCName: 'Henrique:'
+  NPCImage: {fileID: 21300000, guid: 646f7176c4ba7484b847fbbe21d39bd4, type: 3}

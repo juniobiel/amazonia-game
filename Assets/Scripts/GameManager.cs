@@ -5,7 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+  //define um índice para os objetos de missões (Scriptable Objects)
   Dictionary<int, Mission> missionsDirectory;
+  //define um índice para o sistema de missões (Status das missões.)
+  Dictionary<int, string> indexOfMissions;
 
 
   [Header("GUI MANAGER")]
@@ -32,10 +35,20 @@ public class GameManager : MonoBehaviour
   {
     guiManager = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManager>();
     missionsDirectory = new Dictionary<int, Mission>();
+    indexOfMissions = new Dictionary<int, string>();
+
+    /* 
+    Para fins de consultas e organização, cada índice irá indicar qual é o status da missão.
+    Se a variável currentMission se encontra com valor -1, então sabe-se que não existe missão atribuída
+    Se a variável possui valor 0, então a missão atual é a de Desmatamento.
+    Como o sistema de missões não permite adquirir mais de uma missão por vez, o índice serve apenas para
+    orientação.
+    */
+    indexOfMissions.Add(-1, "Nenhuma missão atribuída");
+    indexOfMissions.Add(0, "Missão inicial sobre o desmatamento");
 
     missionsDirectory.Add(0, Desmatamento);
-
-    Debug.Log(currentMission);
+    
   }
 
   private void LateUpdate() 

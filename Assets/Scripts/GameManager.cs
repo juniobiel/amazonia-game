@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     /* 
     Para fins de consultas e organização, cada índice irá indicar qual é o status da missão.
-    Se a variável currentMission se encontra com valor -1, então sabe-se que não existe missão atribuída
+    Se a variável currentMission se encontra com valor -1, então sabe-se que não existe missão atribuída/ativa em execução
     Se a variável possui valor 0, então a missão atual é a de Desmatamento.
     Como o sistema de missões não permite adquirir mais de uma missão por vez, o índice serve apenas para
     orientação.
@@ -47,6 +47,10 @@ public class GameManager : MonoBehaviour
     indexOfMissions.Add(-1, "Nenhuma missão atribuída");
     indexOfMissions.Add(0, "Missão inicial sobre o desmatamento");
 
+    /*
+      Aqui se faz o diretório dos objetos de Missão, que contém Nome, descrição e todas as propriedades. É utilizada
+      para fazer o índice dos ScriptablesObjects.
+    */
     missionsDirectory.Add(0, Desmatamento);
     
   }

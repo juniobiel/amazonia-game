@@ -147,11 +147,13 @@
      <Compile Include="Assets\Assets Importados\Standard Assets\Vehicles\Car\Scripts\Suspension.cs" />
      <Compile Include="Assets\Assets Importados\Standard Assets\Vehicles\Car\Scripts\WheelEffects.cs" />
      <Compile Include="Assets\Assets Importados\[AGUA] - HolyShift\Scripts\CheckForStandardAssets.cs" />
+     <Compile Include="Assets\PlatformMovment.cs" />
      <Compile Include="Assets\Scenes\Aulas-Luis\Cube\RotateAround.cs" />
      <Compile Include="Assets\Scenes\Aulas-Luis\Monetization\MenuController.cs" />
      <Compile Include="Assets\Scenes\Aulas-Luis\Monetization\MonetizationManager.cs" />
      <Compile Include="Assets\Scripts\GUIManager.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\IntroductionUIManager.cs" />
      <Compile Include="Assets\Scripts\Leandro\FixedButton.cs" />
      <Compile Include="Assets\Scripts\Leandro\FixedTouchField.cs" />
      <Compile Include="Assets\Scripts\Leandro\Jogador.cs" />

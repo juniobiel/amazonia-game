@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
   //define um índice para os objetos de missões (Scriptable Objects)
   Dictionary<int, Mission> missionsDirectory;
   //define um índice para o sistema de missões (Status das missões.)
-  Dictionary<int, string> indexOfMissions;
+  Dictionary<float, string> indexOfMissions;
 
 
   [Header("GUI MANAGER")]
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
   {
     guiManager = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManager>();
     missionsDirectory = new Dictionary<int, Mission>();
-    indexOfMissions = new Dictionary<int, string>();
+    indexOfMissions = new Dictionary<float, string>();
 
     /* 
     Para fins de consultas e organização, cada índice irá indicar qual é o status da missão.
@@ -44,8 +44,8 @@ public class GameManager : MonoBehaviour
     Como o sistema de missões não permite adquirir mais de uma missão por vez, o índice serve apenas para
     orientação.
     */
-    indexOfMissions.Add(-1, "Nenhuma missão atribuída");
-    indexOfMissions.Add(0, "Missão inicial sobre o desmatamento");
+    indexOfMissions.Add(-1f, "Nenhuma missão atribuída");
+    indexOfMissions.Add(0f, "Missão inicial sobre o desmatamento");
 
     /*
       Aqui se faz o diretório dos objetos de Missão, que contém Nome, descrição e todas as propriedades. É utilizada
@@ -61,6 +61,8 @@ public class GameManager : MonoBehaviour
 
     if(distanceToNPC <= 2.5f)
     {
+      //Se o jogador estiver perto para interagir com o NPC, deve-se ativar o botão.
+      guiManager.interactionButton.SetActive(true);
       count += Time.deltaTime;
       if(count >= 1.5f)
       {
@@ -70,6 +72,8 @@ public class GameManager : MonoBehaviour
     } 
     else
     {
+      //Se ele ficar longe do NPC, deve-se desativar o botão de interação.
+      guiManager.interactionButton.SetActive(false);
       guiManager.ToggleInteractionButton("inactive");
     }
   }
@@ -91,6 +95,11 @@ public class GameManager : MonoBehaviour
   public Mission GetMission(int id)
   {
     return missionsDirectory[id];
+  }
+
+   public string GetMissionIndex(int id)
+  {
+    return indexOfMissions[id];
   }
 
   public void MissionStart()

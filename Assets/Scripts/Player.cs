@@ -80,43 +80,43 @@ public class Player : MonoBehaviour {
   cam.transform.rotation = Quaternion.LookRotation(transform.position + Vector3.up * 2f - cam.transform.position, Vector3.up);
   
 #endregion
-  if (kickado)
-  {
-    contador += Time.deltaTime;
 
-    if(contador >= 2.0f)
+    if (kickado)
     {
-      kickado = false;
-      contador = 0f;
+      contador += Time.deltaTime;
+
+      if(contador >= 2.0f)
+      {
+        kickado = false;
+        contador = 0f;
+      }
     }
-  }
 
-  if(buttonJump.Pressed && estaNoChao == true || Input.GetKeyDown(KeyCode.Space) && estaNoChao == true)
-  {
-    Debug.Log("apertou!");
-    Rigidbody.velocity = new Vector3(Rigidbody.velocity.x, JumpForce, Rigidbody.velocity.z);
-    estaNoChao = false;
-    animator.SetBool("Parado", false);
-    animator.SetBool("Correndo", false);
-    animator.SetBool("Pulando", true);
-  }
+    if(buttonJump.Pressed && estaNoChao == true || Input.GetKeyDown(KeyCode.Space) && estaNoChao == true)
+    {
+      Debug.Log("apertou!");
+      Rigidbody.velocity = new Vector3(Rigidbody.velocity.x, JumpForce, Rigidbody.velocity.z);
+      estaNoChao = false;
+      animator.SetBool("Parado", false);
+      animator.SetBool("Correndo", false);
+      animator.SetBool("Pulando", true);
+    }
 
-  if (estaNoChao == true)
-  {
-    animator.SetBool("Pulando", false);
-  }
+    if (estaNoChao == true)
+    {
+      animator.SetBool("Pulando", false);
+    }
 
-  if(Rigidbody.velocity.magnitude > 0.5f)
-  {
-    animator.SetBool("Parado", false);
-    animator.SetBool("Correndo", true);
-  }
-  else
-  {
-    animator.SetBool("Parado", true);
-    animator.SetBool("Correndo", false);
-  }
-
+    if(Rigidbody.velocity.magnitude > 0.5f)
+    {
+      animator.SetBool("Parado", false);
+      animator.SetBool("Correndo", true);
+    }
+    else
+    {
+      animator.SetBool("Parado", true);
+      animator.SetBool("Correndo", false);
+    }
   }
 
   public void FixedUpdate()

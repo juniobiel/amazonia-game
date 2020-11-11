@@ -8,7 +8,7 @@ public class GUIManager : MonoBehaviour
   [Header("GAME MANAGER DIRETÓRIO DE MISSÕES")]
   public GameManager gameManager;
 
-  [Header("CONTROLADORES")]
+  [Header("BOTÃO DE INTERAÇÃO")]
   public GameObject interactionButton;
   private float widthInteractionButton;
   private float heightInteractionButton;
@@ -38,6 +38,9 @@ public class GUIManager : MonoBehaviour
   public Sprite muteOff;
   public GameObject muteButtonUI;
 
+  [Header("BARRA DE VITAMINA/FOME")]
+  public GameObject vitalityBarUI;
+
   // Start is called before the first frame update
   void Start()
   {
@@ -52,46 +55,48 @@ public class GUIManager : MonoBehaviour
 
   }
 
-  // Update is called once per frame
+  private void FixedUpdate() 
+  {
+    
+  }
   void Update()
   {
-      if(Input.GetKeyDown(KeyCode.Escape))
+    if(Input.GetKeyDown(KeyCode.Escape))
+    {
+      if(GameIsPaused)
       {
-        if(GameIsPaused)
-        {
-          Resume();
-        }
-        else
-        {
-          ConfigMenu();
-        }
+        Resume();
       }
-
-      if(Input.GetKeyDown(KeyCode.M))
+      else
       {
-        if(showMission)
-        {
-          Resume();
-        }
-        else
-        {
-          MissionMenu();
-        }
+        ConfigMenu();
       }
+    }
 
-      if(Input.GetKeyDown(KeyCode.E) && gameManager.GetDistanceToNPC() <= 2.5f)
+    if(Input.GetKeyDown(KeyCode.M))
+    {
+      if(showMission)
       {
-        if(missionDisplay)
-        {
-          Resume();
-        }
-        else
-        {
-          MissionDisplay();
-        }
+        Resume();
       }
+      else
+      {
+        MissionMenu();
+      }
+    }
 
-  }
+    if(Input.GetKeyDown(KeyCode.E) && gameManager.GetDistanceToNPC() <= 2.5f)
+    {
+      if(missionDisplay)
+      {
+        Resume();
+      }
+      else
+      {
+        MissionDisplay();
+      }
+    }
+  }  
 
   // ------------------------ Game Operations ------------------- 
 
@@ -136,8 +141,19 @@ public class GUIManager : MonoBehaviour
     Time.timeScale = 0f;
     showMission = true;
 
-    missionText.text = gameManager.GetMission(gameManager.GetCurrentMission()).title;
-    missionTip.text = gameManager.GetMission(gameManager.GetCurrentMission()).missionTip;
+    if(gameManager.GetCurrentMission() == -1)
+    {
+      //Caso o índice de missões aponte para o -1, quer dizer que não há missões ativas.
+      missionText.text = gameManager.GetMissionIndex(gameManager.GetCurrentMission());
+      missionTip.text = "Henrique te aguarda para uma nova aventura!";
+    }
+    else
+    {
+      //Caso não, deve-se haver a tratativa da missão ativa, provisioriamente, se mantém a missão inicial sobre o desmatamento.
+      missionText.text = gameManager.GetMission(gameManager.GetCurrentMission()).title;
+      missionTip.text = gameManager.GetMission(gameManager.GetCurrentMission()).missionTip;
+    }
+    
   }
 
   public void ConfigMenu()

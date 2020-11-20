@@ -12,14 +12,12 @@ public class GameManager : MonoBehaviour
 
 
   [Header("GUI MANAGER")]
-  public GUIManager guiManager;
+  public GUIManager GUIManager;
 
   [Header("MISSÕES")] 
-
   public Mission Desmatamento;
-  private int currentMission = -1;
 
-  private bool initialMission = true;
+  public Mission Queimadas;
 
   [Header("NPCS")]
   public GameObject henriqueNPC;
@@ -27,15 +25,28 @@ public class GameManager : MonoBehaviour
   [Header("PLAYER")]
   public GameObject titi;
 
-  private float count = 0;
-  private float distanceToNPC = 0;
+  [Header("OBJETOS PARA MISSÃO INICIAL SOBRE DESMATAMENTO")]
+  public GameObject AreaDaMissao;
+  public GameObject Inimigos;
+
+  //Controllers
+  int NPCLumberjack;
+  int npcsDestroyed = 0;
+  int missionsCompleted = 0;
+  public int currentMission = -1;
+  bool initialMission = true;
+  float count = 0;
+  float distanceToNPC = 0;
+  Vector3 missionTwoStartPoint;
+  
   
   // Start is called before the first frame update
   void Start()
   {
-    guiManager = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManager>();
+    GUIManager = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManager>();
     missionsDirectory = new Dictionary<int, Mission>();
     indexOfMissions = new Dictionary<float, string>();
+    missionTwoStartPoint = new Vector3(2.31f, 21.3f, 648.35f);
 
     /* 
     Para fins de consultas e organização, cada índice irá indicar qual é o status da missão.
@@ -45,13 +56,33 @@ public class GameManager : MonoBehaviour
     orientação.
     */
     indexOfMissions.Add(-1f, "Nenhuma missão atribuída");
-    indexOfMissions.Add(0f, "Missão inicial sobre o desmatamento");
+    indexOfMissions.Add(0f, "Missão inicial sobre o desmatamento"); 
+    indexOfMissions.Add(1f, "Missão sobre as Queimadas");
 
     /*
       Aqui se faz o diretório dos objetos de Missão, que contém Nome, descrição e todas as propriedades. É utilizada
       para fazer o índice dos ScriptablesObjects.
     */
+
+    //Informações da missão de desmatamento adicionadas via editor
     missionsDirectory.Add(0, Desmatamento);
+
+    //Informaçãoes da missão de Queimadas.
+    //PlayerPrefs.SetString("PlayerName", "Gabriel");
+    Queimadas.description = PlayerPrefs.GetString("PlayerName") + 
+    ", um pouco adiante alguns homens colocaram fogo na floresta para fazer um pasto." 
+    + "\nMuitas árvores morreram e os animais tiveram que sair de onde moravam por conta do fogo, a única coisa que resta são as cinzas."
+    + "\nPor enquanto, não podemos fazer muita coisa... Preciso que você chegue até o outro lado da floresta queimada para podermos salvar alguns dos animais feridos!";
+    
+    missionsDirectory.Add(1, Queimadas);
+
+    /* 
+      Deve-se iniciar desativado os objetos da missão inicial para que não haja conflito se o jogador não obter uma missão.
+      Já que não tem implementado um sistema de respawn de NPC.
+    */
+
+    AreaDaMissao.gameObject.SetActive(false);
+    Inimigos.gameObject.SetActive(false);
     
   }
 
@@ -62,21 +93,58 @@ public class GameManager : MonoBehaviour
     if(distanceToNPC <= 2.5f)
     {
       //Se o jogador estiver perto para interagir com o NPC, deve-se ativar o botão.
-      guiManager.interactionButton.SetActive(true);
+      GUIManager.interactionButton.SetActive(true);
       count += Time.deltaTime;
       if(count >= 1.5f)
       {
         count = 0;
-        guiManager.ToggleInteractionButton("active");
+        GUIManager.ToggleInteractionButton("active");
       }
     } 
     else
     {
       //Se ele ficar longe do NPC, deve-se desativar o botão de interação.
-      guiManager.interactionButton.SetActive(false);
-      guiManager.ToggleInteractionButton("inactive");
+      GUIManager.interactionButton.SetActive(false);
+      GUIManager.ToggleInteractionButton("inactive");
+    }
+
+  }
+
+  // ------------------------ Gerenciamento de Missões ------------------
+  public void MissionStart()
+  {
+    if(initialMission)
+    {
+      currentMission = 0;
+      initialMission = false;
+      
+      AreaDaMissao.gameObject.SetActive(true);
+      Inimigos.gameObject.SetActive(true);
+      SetLumberjackQuantityNumber();
+      GUIManager.SetObjectiveDisplayON();
+    }
+    if(missionsCompleted == 1)
+    {
+      currentMission = 1;
     }
   }
+
+  public void MissionEnd()
+  {
+    if(currentMission == 0)
+    {
+      GUIManager.SetObjectiveDisplayOFF();
+      Destroy(AreaDaMissao);
+      Destroy(Inimigos);
+      henriqueNPC.transform.position = missionTwoStartPoint;
+      henriqueNPC.transform.rotation = Quaternion.Euler(0, -120, 0);
+    }
+      
+    currentMission = -1;
+    missionsCompleted++;
+    GUIManager.MissionEndDisplay();
+  }
+
 
   // ------------------------ alteração de cenas ------------------
 
@@ -90,7 +158,36 @@ public class GameManager : MonoBehaviour
     SceneManager.LoadScene("Menu", LoadSceneMode.Single);
   }
 
-  // ------------------------ Getters e Setters ------------------- 
+    // ------------------------ Getters e Setters ------------------- 
+
+  public int GetMissionsCompleted()
+  {
+    return missionsCompleted;
+  }
+
+  public void SetNPCDestroyed()
+  {
+    npcsDestroyed++;
+    if(npcsDestroyed == 5)
+    {
+      MissionEnd();
+    }
+  }
+
+  public int GetNPCsDestroyed()
+  {
+    return npcsDestroyed;
+  }
+
+  public void SetLumberjackQuantityNumber()
+  {
+    NPCLumberjack = GameObject.FindGameObjectsWithTag("Enemy").Length;
+  }
+
+  public int GetLumberjackQuantityNumber()
+  {
+    return NPCLumberjack;
+  }
 
   public Mission GetMission(int id)
   {
@@ -100,20 +197,6 @@ public class GameManager : MonoBehaviour
    public string GetMissionIndex(int id)
   {
     return indexOfMissions[id];
-  }
-
-  public void MissionStart()
-  {
-    if(initialMission)
-    {
-      currentMission = 0;
-      initialMission = false;
-    }
-    else
-    {
-      currentMission += 1;
-    }
-    Debug.Log(currentMission);
   }
 
   public int GetCurrentMission()

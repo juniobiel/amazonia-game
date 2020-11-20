@@ -10,10 +10,6 @@ public class MissionDisplay : MonoBehaviour
   [Header("ELEMENTOS DA INTERFACE SOBRE A MISSÃO")]
   public Text missionTitle;
   public Text missionDescription;
-  public Text missionReward;
-  public Image missionImage;
-  public Image missionItem;
-  public Image rewardImage;
   public Button acceptButton;
   public Button declineButton;
   public Button resumeButton;
@@ -23,42 +19,63 @@ public class MissionDisplay : MonoBehaviour
   public Text npcName;
   int currentMission;
 
-  private void Start() 
+  private void OnEnable() 
   {
-    SetDisplayOn();
-    SetCurrentMissionInformation(mission);
-  }
-  private void Update() 
-  {
-    currentMission = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetCurrentMission();
-    Debug.Log(currentMission);
-    if(currentMission == -1)
+    GameManager GameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+
+    
+    if(GameManager.GetCurrentMission() == -1 && GameManager.GetMissionsCompleted() == 0)
     {
+      mission = GameManager.GetMission(0);
       SetCurrentMissionInformation(mission);
+      SetDisplayOn();
     }
-    else if(currentMission == 0)
+    else if(GameManager.GetCurrentMission() == -1 && GameManager.GetMissionsCompleted() == 1)
     {
-      mission =  GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetMission(currentMission);
+      mission = GameManager.GetMission(1);
+      SetCurrentMissionInformation(mission);
+      SetDisplayOn();
+    }
+    else if(GameManager.GetCurrentMission() == 0 || GameManager.GetCurrentMission() == 1 )
+    {
       SetDisplayOff();
+      mission = GameManager.GetMission(GameManager.GetCurrentMission());
       MissionActiveWarning(mission);
+      
     }
-    else
-    {
-      SetDisplayOff();
-    }
+    
   }
+  // private void Update() 
+  // {
+  //   currentMission = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetCurrentMission();
+    
+  //   if(currentMission == -1)
+  //   {
+  //     SetCurrentMissionInformation(mission);
+  //   }
+  //   else if(currentMission == 0)
+  //   {
+  //     mission =  GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetMission(currentMission);
+  //     SetDisplayOff();
+  //     MissionActiveWarning(mission);
+  //   }
+  //   else if(currentMission == 1)
+  //   {
+  //     mission = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetMission(currentMission);
+  //     SetDisplayOff();
+
+  //   }
+  //   else
+  //   {
+  //     SetDisplayOff();
+  //   }
+  // }
 
   void SetDisplayOff()
   {
     missionTitle.gameObject.SetActive(false);
 
     missionDescription.gameObject.SetActive(false);
-
-    missionImage.gameObject.SetActive(false);
-    missionItem.gameObject.SetActive(false);
-
-    missionReward.gameObject.SetActive(false);
-    rewardImage.gameObject.SetActive(false);
     
     npcName.gameObject.SetActive(false);
     npcImage.gameObject.SetActive(false);
@@ -73,12 +90,6 @@ public class MissionDisplay : MonoBehaviour
     missionTitle.gameObject.SetActive(true);
 
     missionDescription.gameObject.SetActive(true);
-
-    missionImage.gameObject.SetActive(true);
-    missionItem.gameObject.SetActive(true);
-
-    missionReward.gameObject.SetActive(true);
-    rewardImage.gameObject.SetActive(true);
     
     npcName.gameObject.SetActive(true);
     npcImage.gameObject.SetActive(true);
@@ -92,13 +103,7 @@ public class MissionDisplay : MonoBehaviour
     mission = currentMissionScriptableObject;
 
     missionTitle.text = mission.title;
-    missionDescription.text = mission.description;
-
-    missionImage.sprite = mission.image;
-    missionItem.sprite = mission.itemCollectable;
-
-    missionReward.text = mission.rewardDescription;
-    rewardImage.sprite = mission.rewardImage;   
+    missionDescription.text = mission.description;  
     
     npcName.text = mission.NPCName;
     npcImage.sprite = mission.NPCImage;
@@ -113,7 +118,7 @@ public class MissionDisplay : MonoBehaviour
     npcName.gameObject.SetActive(true);
     npcImage.gameObject.SetActive(true);
 
-    missionDescription.text =  "Vá encontrar o Xaxim e tome cuidado com os lenhadores!";
+    missionDescription.text =  currentMisisonScriptableObject.missionTip;
     missionDescription.gameObject.SetActive(true);
 
     resumeButton.gameObject.SetActive(true);

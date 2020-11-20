@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Amazonia/Amazonia.unity
     guid: d4f0f78d1f63eb74f99e814e0fd21a47
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: c111421e78f82744fa53d02f604498c7
   m_configObjects: {}

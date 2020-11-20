@@ -13,11 +13,21 @@ public class IntroductionUIManager : MonoBehaviour
   public Image npcNarrativeFieldUI;
   public Text narrativeTextUI;
   public List<string> scriptNarrativeText;
+  public GameObject IntroductionCamera;
 
   [Header("ELEMENTOS PARA INTERAÇÃO COM O PLAYER!")]
   public GameObject CollectPlayerNameUI;
   public InputField InputNameFieldUI;
   public Text WarningText;
+
+
+  [Header("ELEMENTOS DA GAMEPLAY PARA START")]
+  public GameObject Character;
+  public GameObject Enemy;
+  public GameObject GUI;
+  public GameObject GameManager;
+  public GameObject Camera;
+
 
 
   string npcName;
@@ -36,6 +46,9 @@ public class IntroductionUIManager : MonoBehaviour
   float count;
   int textIndex;
   public int narrativeIndex;
+  //Define o final da narrativa de introdução
+  public bool introductionEnd = false;
+
   void Start()
   {
     nextScript = false;
@@ -83,8 +96,6 @@ public class IntroductionUIManager : MonoBehaviour
       AnimateShowNarrativeText(narrativeIndex);
     else if (showNarrativeTextUI && !showPlayerPopUp && !nameCollected)
       Invoke("ShowCollectNamePopUp", 1f);
-
-      //if(Input.anyKeyDown || Input.touchCount >= 1)
         
 
     //Parte 2
@@ -95,6 +106,14 @@ public class IntroductionUIManager : MonoBehaviour
     else if (narrativeIndex == 2 && count >= 0.05f && nextScript)
     {
       AnimateShowNarrativeText(narrativeIndex);
+    }
+    else if (narrativeIndex == 3 && count >= 0.05f && nextScript)
+    {
+      AnimateShowNarrativeText(narrativeIndex);
+    }
+    else if(introductionEnd)
+    {
+      StartGameNow();
     }
   }
 
@@ -147,8 +166,7 @@ public class IntroductionUIManager : MonoBehaviour
     }
   }
 
-  //Função recursiva no método Update para animação de Narrativa
-
+  //Função recursiva no método Update para animação da Narrativa
   void AnimateShowNarrativeText(int id)
   {
     narrativeTextUI.gameObject.SetActive(true);
@@ -169,15 +187,18 @@ public class IntroductionUIManager : MonoBehaviour
     }
   }
 
+  //Reseta o texto para nova inserção
   IEnumerator SetNarrativeTextNull()
   {
-    //Corotina para controle de sequencia narrativa
     yield return new WaitForSeconds(2f);
+    if(narrativeIndex >= 4)
+      introductionEnd = true;
     narrativeTextUI.text = "";
     nextScript = true;
+    
   }
 
-  //Função de chamada de Tela para Coletar Nome do Jogador
+  //Função chamada de tela para coletar o nome do jogador
   void ShowCollectNamePopUp()
   {
     NarrativeUI.SetActive(false);
@@ -208,11 +229,27 @@ public class IntroductionUIManager : MonoBehaviour
       1 - (No método Start) Apresentação do NPC
       2 - Identificação do Jogador e introdução sobre Bioma
       3 - Conceituando o Bioma
+      4 - Chamada para o início do jogo!
   */
   void PopulateScriptNarrative()
   {
     scriptNarrativeText.Add(PlayerPrefs.GetString("PlayerName") + ", estamos na Amazônia.\nVocê sabia que aqui é um dos maiores biomas brasileiros?\nEspera um pouco, você sabe o que é um Bioma?");
-    scriptNarrativeText.Add("Um bioma é onde vivem um monte de animais, plantas, árvores e insetos na natureza!\nÉ importantíssimo para a vida no nosso Planeta!\nAqui na Amazônia existe essa imensa diversidade!");
+    scriptNarrativeText.Add("Um bioma é onde vivem um monte de animais, plantas, árvores e insetos na natureza!\nÉ importantíssimo para a vida no nosso Planeta!\nAqui na Amazônia existe essa imensa diversidade!");   
+    scriptNarrativeText.Add("Aproveitando que está aqui, que tal conhecer um pouco sobre a Amazônia?\nTome cuidado! A selva é perigosa e você provavelmente vai econtrar alguns desafios...\nFique atento!");   
+  }
+
+  void StartGameNow()
+  {
+    Destroy(IntroductionCamera.gameObject);
+    gameObject.SetActive(false);
+
+    GUI.gameObject.SetActive(true);
+    GameManager.gameObject.SetActive(true);
+    Character.gameObject.SetActive(true);
+    Camera.gameObject.SetActive(true);
+    Enemy.gameObject.SetActive(true);
+
+    Destroy(gameObject);
   }
 
 }

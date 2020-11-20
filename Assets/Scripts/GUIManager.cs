@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GUIManager : MonoBehaviour
 {
   [Header("GAME MANAGER DIRETÓRIO DE MISSÕES")]
-  public GameManager gameManager;
+  public GameManager GameManager;
 
   [Header("BOTÃO DE INTERAÇÃO")]
   public GameObject interactionButton;
@@ -24,6 +24,10 @@ public class GUIManager : MonoBehaviour
   [Header("DISPLAY DA MISSÃO")]
   public GameObject missionDisplayUI;
   public bool missionDisplay = false;
+  public GameObject MissionEndDisplayUI;
+
+  [Header("DISPLAY DE OBJETIVOS")]
+  public GameObject objectiveDisplayUI;
 
   [Header("CAMPO DE VIDA")]
   public GameObject[] heartIcons;
@@ -44,7 +48,7 @@ public class GUIManager : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-    gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+    GameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
     missionMenuUI.SetActive(false);
 
@@ -53,12 +57,10 @@ public class GUIManager : MonoBehaviour
 
     heightInteractionButton = interactionButton.GetComponent<RectTransform>().rect.height;
 
+    MissionEndDisplayUI.gameObject.SetActive(false);
+
   }
 
-  private void FixedUpdate() 
-  {
-    
-  }
   void Update()
   {
     if(Input.GetKeyDown(KeyCode.Escape))
@@ -85,7 +87,7 @@ public class GUIManager : MonoBehaviour
       }
     }
 
-    if(Input.GetKeyDown(KeyCode.E) && gameManager.GetDistanceToNPC() <= 2.5f)
+    if(Input.GetKeyDown(KeyCode.E) && GameManager.GetDistanceToNPC() <= 2.5f)
     {
       if(missionDisplay)
       {
@@ -120,15 +122,21 @@ public class GUIManager : MonoBehaviour
     GameIsPaused = false;
     showMission = false;
     missionDisplay = false;
+
+    if(GameManager.GetCurrentMission() == 0)
+    {
+      SetObjectiveDisplayON();
+    }
   }
 
   public void MissionDisplay()
   {
-    if(gameManager.GetDistanceToNPC() <= 2.5f)
+    if(GameManager.GetDistanceToNPC() <= 2.5f)
     {
       baseUI.SetActive(false);
       missionDisplayUI.SetActive(true);
       missionDisplay = true;
+      SetObjectiveDisplayOFF();
     }
     
   }
@@ -137,21 +145,22 @@ public class GUIManager : MonoBehaviour
   {
     baseUI.SetActive(false);
     missionMenuUI.SetActive(true);
+    SetObjectiveDisplayOFF();
 
     Time.timeScale = 0f;
     showMission = true;
 
-    if(gameManager.GetCurrentMission() == -1)
+    if(GameManager.GetCurrentMission() == -1)
     {
       //Caso o índice de missões aponte para o -1, quer dizer que não há missões ativas.
-      missionText.text = gameManager.GetMissionIndex(gameManager.GetCurrentMission());
+      missionText.text = GameManager.GetMissionIndex(GameManager.GetCurrentMission());
       missionTip.text = "Henrique te aguarda para uma nova aventura!";
     }
     else
     {
       //Caso não, deve-se haver a tratativa da missão ativa, provisioriamente, se mantém a missão inicial sobre o desmatamento.
-      missionText.text = gameManager.GetMission(gameManager.GetCurrentMission()).title;
-      missionTip.text = gameManager.GetMission(gameManager.GetCurrentMission()).missionTip;
+      missionText.text = GameManager.GetMission(GameManager.GetCurrentMission()).title;
+      missionTip.text = GameManager.GetMission(GameManager.GetCurrentMission()).missionTip;
     }
     
   }
@@ -160,6 +169,7 @@ public class GUIManager : MonoBehaviour
   {
     baseUI.SetActive(false);
     configMenuUI.SetActive(true);
+    SetObjectiveDisplayOFF();
 
     Time.timeScale = 0f;
     GameIsPaused = true;
@@ -220,13 +230,29 @@ public class GUIManager : MonoBehaviour
 
   public void OnClickAcceptMission()
   {
-    gameManager.MissionStart();
+    GameManager.MissionStart();
     Resume();
+  }
+
+  public void SetObjectiveDisplayON()
+  {
+    objectiveDisplayUI.gameObject.SetActive(true);
+  }
+
+  public void SetObjectiveDisplayOFF()
+  {
+    objectiveDisplayUI.gameObject.SetActive(false);
+  }
+
+  public void MissionEndDisplay()
+  {
+    MissionEndDisplayUI.gameObject.SetActive(true);
   }
 
   
   // ------------------------ NPC Operations ------------------- 
 
+  //Botão de interação da missão
   public void ToggleInteractionButton(string status)
   {
     Vector2 sizeNow = interactionButton.GetComponent<RectTransform>().sizeDelta;
@@ -250,14 +276,5 @@ public class GUIManager : MonoBehaviour
     }
     
   }
-
-  // ------------------------ Items Operations ------------------- 
-  public void ItemProximityReport()
-  {
-
-  }
-
-  // ------------------------ Getters e Setters ------------------- 
-
     
 }

@@ -1,14 +1,14 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
     
   [Header("GAME USER INTERFACE")]
-  public GUIManager guiManager;
+  public GUIManager GUIManager;
 
   [Header("GAME MANAGER")]
-  public GameManager gameManager;
+  public GameManager GameManager;
 
   [Header("JOYSTICKS E BOTÕES DE INTERAÇÃO")]
   public FixedJoystick joystickEsquerdo;
@@ -49,8 +49,8 @@ public class Player : MonoBehaviour {
   void Start()
   {
     // ---- Initial Objects ----
-    guiManager = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManager>();
-    gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+    GUIManager = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManager>();
+    GameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     joystickEsquerdo = GameObject.FindGameObjectWithTag("JoyStick").GetComponent<FixedJoystick>();
     buttonInteract = GameObject.FindGameObjectWithTag("ButtonInteract").GetComponent<FixedButton>();
     buttonJump = GameObject.FindGameObjectWithTag("ButtonJump").GetComponent<FixedButton>();
@@ -133,16 +133,16 @@ public class Player : MonoBehaviour {
   public void OnTriggerEnter(Collider collider)
   {
 
-    if (collider.gameObject.tag == "Enemy" && estaNoChao && !kickado)
+    if (collider.gameObject.tag == "Enemy" || collider.gameObject.tag == "TerrenoQueimado" && estaNoChao && !kickado)
     {
       if(currentHealth < 1)
       {
-        //SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+        SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
         Debug.Log("Game Over");
       } else
-      {
+      {        
+        GUIManager.ReduceLife(currentHealth);
         currentHealth -= 1;
-        guiManager.ReduceLife(currentHealth);
       }
 
       kickado = true;
@@ -158,37 +158,21 @@ public class Player : MonoBehaviour {
       Rigidbody.AddForce(transform.up * force * 5);
       Rigidbody.AddForce(transform.forward * force * 5);
     }
-
-    if(collider.gameObject.tag == "NPC")
-    {
-      //guiManager.NPCProximityEnter();
-    }
   }
 
   private void OnTriggerStay(Collider other) {
     if(other.tag == "Objeto")
     {
-      //guiManager.ItemProximityReport("Pressione para interagir!", true);
-
       if(Input.GetKey(KeyCode.E) || buttonInteract.Pressed)
       {
         GameObject.FindGameObjectWithTag("Objeto").SetActive(false);
       }
     }
   }
-
-  private void OnTriggerExit(Collider other) 
-  {
-    if(other.tag == "Objeto")
-    {
-      //guiManager.ItemProximityReport("Pressione para interagir!", false);
-    }
-  }
-
     public void OnCollisionEnter(Collision other)
   {
 
-    if (other.transform.tag == "Ground")
+    if (other.transform.tag == "Ground" || other.gameObject.tag == "TerrenoQueimado")
     {
       estaNoChao = true;
     }

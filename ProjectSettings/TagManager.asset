@@ -16,6 +16,10 @@ TagManager:
   - JoyStick
   - ButtonInteract
   - ButtonJump
+  - IntroductionUI
+  - IntroductionCam
+  - Desmatamento
+  - TerrenoQueimado
   layers:
   - Default
   - TransparentFX

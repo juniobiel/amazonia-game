@@ -9,15 +9,7 @@ public class Mission : ScriptableObject
   public string title;
 
   public string description;
-
-  public Sprite image;
-
-  public Sprite itemCollectable;
-
-  public string rewardDescription;
-
-  public Sprite rewardImage;
-
+  
   public string missionTip;
 
   [Header("DADOS DO NPC")]

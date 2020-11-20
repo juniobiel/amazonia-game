@@ -45,31 +45,6 @@ public class MissionDisplay : MonoBehaviour
     }
     
   }
-  // private void Update() 
-  // {
-  //   currentMission = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetCurrentMission();
-    
-  //   if(currentMission == -1)
-  //   {
-  //     SetCurrentMissionInformation(mission);
-  //   }
-  //   else if(currentMission == 0)
-  //   {
-  //     mission =  GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetMission(currentMission);
-  //     SetDisplayOff();
-  //     MissionActiveWarning(mission);
-  //   }
-  //   else if(currentMission == 1)
-  //   {
-  //     mission = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetMission(currentMission);
-  //     SetDisplayOff();
-
-  //   }
-  //   else
-  //   {
-  //     SetDisplayOff();
-  //   }
-  // }
 
   void SetDisplayOff()
   {

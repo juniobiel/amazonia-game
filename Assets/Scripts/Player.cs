@@ -58,9 +58,7 @@ public class Player : MonoBehaviour {
     
     Rigidbody = GetComponent<Rigidbody>();
     currentHealth = maxHealth;
-    animator = GetComponent<Animator>();
-
-    //GameManager.SetCurrentMission(1);
+    animator = GetComponent<Animator>();    
   }
 
   void Update()

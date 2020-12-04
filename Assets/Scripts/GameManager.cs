@@ -66,6 +66,10 @@ public class GameManager : MonoBehaviour
     indexOfMissions.Add(-1f, "Nenhuma missão atribuída");
     indexOfMissions.Add(0f, "Missão inicial sobre o desmatamento"); 
     indexOfMissions.Add(1f, "Missão sobre as Queimadas");
+    
+    // Índice adicionado mas não consta como missão, apenas para melhor legibilidade.
+    indexOfMissions.Add(2f, "Encerramento da gameplay");
+
 
     /*
       Aqui se faz o diretório dos objetos de Missão, que contém Nome, descrição e todas as propriedades. É utilizada
@@ -91,7 +95,21 @@ public class GameManager : MonoBehaviour
 
     AreaDaMissao.gameObject.SetActive(false);
     Inimigos.gameObject.SetActive(false);
-    
+
+    /* Para testar a partir da segunda missão apenas
+    SetCurrentMission(1);
+    gameObject.AddComponent<MonetizationManager>();
+    missionsCompleted = 1;
+    PlayerPrefs.SetInt("COMPROU_A_REMOCAO_DE_ANUNCIOS", 1); 
+    */
+
+    //Para testar a partir da terceira missão apenas
+    SetCurrentMission(-1);
+    gameObject.AddComponent<MonetizationManager>();
+    currentMission = 1;
+    missionsCompleted = 1;
+    PlayerPrefs.SetInt("COMPROU_A_REMOCAO_DE_ANUNCIOS", 1);
+    Invoke("MissionEnd", 3f);    
   }
 
   private void LateUpdate() 

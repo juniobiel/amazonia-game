@@ -236,6 +236,7 @@ PlayerSettings:
   metalEditorSupport: 1
   metalAPIValidation: 1
   iOSRenderExtraFrameOnPause: 0
+  iosCopyPluginsCodeInsteadOfSymlink: 0
   appleDeveloperTeamID: 
   iOSManualSigningProvisioningProfileID: 
   tvOSManualSigningProvisioningProfileID: 
@@ -907,6 +908,8 @@ PlayerSettings:
   cloudServicesEnabled:
     Build: 1
     Collab: 1
+    ErrorHub: 0
+    Hub: 0
     UNet: 1
   luminIcon:
     m_Name: 
@@ -922,8 +925,8 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   cloudProjectId: 47e2ca94-f305-4807-88d2-00300f682fb1
   framebufferDepthMemorylessMode: 0
-  projectName: amazonia-game
-  organizationId: projeto-integrado-3
+  projectName: amazonia-jogo
+  organizationId: unity_pttgwtwe2djm2q
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

@@ -135,10 +135,20 @@ public class GUIManager : MonoBehaviour
   {
     if(GameManager.GetDistanceToNPC() <= 2.5f)
     {
-      baseUI.SetActive(false);
-      missionDisplayUI.SetActive(true);
-      missionDisplay = true;
-      SetObjectiveDisplayOFF();
+      //Define as ações de encerramento do jogo
+      if(GameManager.GetCurrentMission() == -1 && GameManager.GetMissionsCompleted() == 2)
+      {
+        
+        gameObject.SetActive(false);
+      }
+      else
+      {
+        baseUI.SetActive(false);
+        missionDisplayUI.SetActive(true);
+        missionDisplay = true;
+        SetObjectiveDisplayOFF();
+      }
+      
     }
     
   }
@@ -157,7 +167,7 @@ public class GUIManager : MonoBehaviour
       //Caso o índice de missões aponte para o -1, quer dizer que não há missões ativas.
       missionText.text = GameManager.GetMissionIndex(GameManager.GetCurrentMission());
       missionTip.text = "Henrique te aguarda para uma nova aventura!";
-        }
+    }
     else
     {
       //Caso não, deve-se haver a tratativa da missão ativa, provisioriamente, se mantém a missão inicial sobre o desmatamento.

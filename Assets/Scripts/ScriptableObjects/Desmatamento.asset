@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5367b128a21b90e438a533aa1ea9bac6, type: 3}
+  m_Name: Desmatamento
+  m_EditorClassIdentifier: 
+  title: "O dinheiro nasce em \xE1rvore"
+  description: "Preciso que me ajude com uma miss\xE3o muito importante! \nAlguns
+    lenhadores est\xE3o desmatando a floresta para vender madeira ilegalmente! \nDistraia-os
+    para que eles parem com isso!"
+  missionTip: "Atraia a aten\xE7\xE3o dos lenhadores, precisamos tira-los daqui!
+    Cuidado para n\xE3o ser capturado!"
+  NPCName: 'Henrique:'
+  NPCImage: {fileID: 21300000, guid: 646f7176c4ba7484b847fbbe21d39bd4, type: 3}

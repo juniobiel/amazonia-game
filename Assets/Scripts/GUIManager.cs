@@ -25,6 +25,7 @@ public class GUIManager : MonoBehaviour
   public GameObject missionDisplayUI;
   public bool missionDisplay = false;
   public GameObject MissionEndDisplayUI;
+  public GameObject endUI;
 
   [Header("DISPLAY DE OBJETIVOS")]
   public GameObject objectiveDisplayUI;
@@ -138,8 +139,8 @@ public class GUIManager : MonoBehaviour
       //Define as ações de encerramento do jogo
       if(GameManager.GetCurrentMission() == -1 && GameManager.GetMissionsCompleted() == 2)
       {
-        
-        gameObject.SetActive(false);
+        baseUI.SetActive(false);
+        endUI.SetActive(true);
       }
       else
       {

@@ -51,8 +51,10 @@ public class GameManager : MonoBehaviour
   {
     monetizationManager = FindObjectOfType<MonetizationManager>();
     GUIManager = GameObject.FindGameObjectWithTag("GUIManager").GetComponent<GUIManager>();
+    
     missionsDirectory = new Dictionary<int, Mission>();
     indexOfMissions = new Dictionary<float, string>();
+
     missionTwoStartPoint = new Vector3(40.31f, 8.05f, 697.8f);
     missionThreeStartPoint = new Vector3(83.96f, 12.57f, 1311.41f);
 
@@ -104,12 +106,13 @@ public class GameManager : MonoBehaviour
     */
 
     //Para testar a partir da terceira missão apenas
-    SetCurrentMission(-1);
+    /*SetCurrentMission(-1);
     gameObject.AddComponent<MonetizationManager>();
     currentMission = 1;
     missionsCompleted = 1;
     PlayerPrefs.SetInt("COMPROU_A_REMOCAO_DE_ANUNCIOS", 1);
-    Invoke("MissionEnd", 3f);    
+    Invoke("MissionEnd", 3f);*/
+
   }
 
   private void LateUpdate() 
@@ -144,7 +147,7 @@ public class GameManager : MonoBehaviour
         {
             titi.GetComponent<Rigidbody>().isKinematic = true;
             contadorDosAds += Time.deltaTime;
-            if (contadorDosAds > 3.0f)
+            if (contadorDosAds > 2.5f)
             {
                 monetizationManager.ShowRewarded();
                 missaoCompletaBool = false;
@@ -213,7 +216,8 @@ public class GameManager : MonoBehaviour
 
   public void OnBtnMenu()
   {
-    SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
   }
 
     // ------------------------ Getters e Setters ------------------- 

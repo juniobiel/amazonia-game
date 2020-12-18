@@ -56,7 +56,7 @@ public class MonetizationManager : MonoBehaviour, IUnityAdsListener
     //--------------------------------------------------
     public void OnPurchaseComplete(Product product)
     {
-        if (product.definition.id.Equals("remocaodeanuncios"))
+        if (product.definition.id.Equals("removeads"))
         {
             PlayerPrefs.SetInt("COMPROU_A_REMOCAO_DE_ANUNCIOS", 1);
             PlayerPrefs.Save();

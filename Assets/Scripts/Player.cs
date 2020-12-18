@@ -47,6 +47,9 @@ public class Player : MonoBehaviour {
   Vector3 vel;
   bool kickado = false;
 
+  public AudioSource audio;
+  //public AudioClip hurt;
+
   void Start()
   {
     // ---- Initial Objects ----
@@ -56,6 +59,8 @@ public class Player : MonoBehaviour {
     buttonInteract = GameObject.FindGameObjectWithTag("ButtonInteract").GetComponent<FixedButton>();
     buttonJump = GameObject.FindGameObjectWithTag("ButtonJump").GetComponent<FixedButton>();
     
+    audio = GetComponent<AudioSource>();
+
     Rigidbody = GetComponent<Rigidbody>();
     currentHealth = maxHealth;
     animator = GetComponent<Animator>();    
@@ -135,7 +140,7 @@ public class Player : MonoBehaviour {
 
     if (collider.gameObject.tag == "Enemy" || collider.gameObject.tag == "TerrenoQueimado" && estaNoChao && !kickado)
     {
-      if(currentHealth < 1)
+      if(currentHealth < 2)
       {
         SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
         Debug.Log("Game Over");
@@ -143,6 +148,7 @@ public class Player : MonoBehaviour {
       {        
         GUIManager.ReduceLife(currentHealth);
         currentHealth -= 1;
+        audio.Play();
       }
 
       kickado = true;

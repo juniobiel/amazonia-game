@@ -8,6 +8,8 @@ public class GUIManager : MonoBehaviour
   [Header("GAME MANAGER DIRETÓRIO DE MISSÕES")]
   public GameManager GameManager;
 
+  public GameObject PersonagemGameObject;
+
   [Header("BOTÃO DE INTERAÇÃO")]
   public GameObject interactionButton;
   private float widthInteractionButton;
@@ -43,9 +45,10 @@ public class GUIManager : MonoBehaviour
   public Sprite muteOff;
   public GameObject muteButtonUI;
   public GameObject seta;
+  public GameObject endCamera;
 
-  [Header("BARRA DE VITAMINA/FOME")]
-  public GameObject vitalityBarUI;
+  //[Header("BARRA DE VITAMINA/FOME")]
+  //public GameObject vitalityBarUI;
 
   // Start is called before the first frame update
   void Start()
@@ -140,6 +143,8 @@ public class GUIManager : MonoBehaviour
       if(GameManager.GetCurrentMission() == -1 && GameManager.GetMissionsCompleted() == 2)
       {
         baseUI.SetActive(false);
+        PersonagemGameObject.SetActive(false);
+        endCamera.SetActive(true);
         endUI.SetActive(true);
       }
       else

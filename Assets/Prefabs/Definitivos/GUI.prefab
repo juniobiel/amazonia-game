@@ -95,7 +95,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7419739315392707301
 RectTransform:
   m_ObjectHideFlags: 0
@@ -112,8 +112,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -352, y: 460}
-  m_SizeDelta: {x: 1000, y: 50}
+  m_AnchoredPosition: {x: -350, y: 230}
+  m_SizeDelta: {x: 1000, y: 57.725266}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8770122083723910046
 CanvasRenderer:
@@ -144,7 +144,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 8d4693fc7ee854547bfc53cbec5ef7ca, type: 3}
-    m_FontSize: 40
+    m_FontSize: 45
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -737,6 +737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameManager: {fileID: 0}
+  PersonagemGameObject: {fileID: 0}
   interactionButton: {fileID: 1399221803466968912}
   missionMenuUI: {fileID: 7594713899614188976}
   missionText: {fileID: 7594713900062695109}
@@ -761,7 +762,6 @@ MonoBehaviour:
   muteOff: {fileID: 21300000, guid: 8bc1d6375ceac7147b72d661aea19340, type: 3}
   muteButtonUI: {fileID: 7594713900022601350}
   seta: {fileID: 0}
-  vitalityBarUI: {fileID: 0}
 --- !u!223 &1399221804328791941
 Canvas:
   m_ObjectHideFlags: 0
@@ -2934,7 +2934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3473229605535259161
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2951,8 +2951,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -20}
-  m_SizeDelta: {x: 1700, y: 890}
+  m_AnchoredPosition: {x: 0, y: -33}
+  m_SizeDelta: {x: 1700, y: 440}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &309860244143641608
 CanvasRenderer:
@@ -2983,7 +2983,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 20f932eac4726a04c9986aed7f793e6e, type: 3}
-    m_FontSize: 45
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
@@ -3007,6 +3007,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b4a356fef660e040aeeb4baebc5cfc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CreditUI: {fileID: 0}
+  EndUI: {fileID: 0}
+  TextUI: {fileID: 0}
+  NPCNameUI: {fileID: 0}
+  FadeRate: 0
+  image: {fileID: 0}
+  targetAlpha: 0
 --- !u!1 &6965700592458220104
 GameObject:
   m_ObjectHideFlags: 0
@@ -3229,7 +3236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3728840759271347376
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3248,8 +3255,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -163.52417, y: -92.00958}
+  m_AnchoredPosition: {x: 0, y: -223}
+  m_SizeDelta: {x: -163.52417, y: -530.8906}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1778108420698187830
 CanvasRenderer:
